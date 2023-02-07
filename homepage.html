@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        #dvd-logo {
+            position: absolute;
+            width: 250;
+            height: 200;
+            background-image: url(logo.png);
+            background-size: contain;
+            background-repeat: round;
+        }
+
+        #counter {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 50px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dvd-logo"></div>
+    <div id="counter">0</div>
+</body>
+<script>
+    var logo = document.getElementById("dvd-logo");
+    var x = 1;
+    var y = 1;
+    var speed = 30;
+    var hits = 0;
+    var counter = document.getElementById("counter");
+
+    function update() {
+        var logoWidth = logo.offsetWidth;
+        var logoHeight = logo.offsetHeight;
+        var screenWidth = window.innerWidth;
+        var screenHeight = window.innerHeight;
+
+        logo.style.left = (logo.offsetLeft + x * speed) + "px";
+        logo.style.top = (logo.offsetTop + y * speed) + "px";
+
+        if (logo.offsetLeft + logoWidth >= screenWidth || logo.offsetLeft <= 0) {
+            x = -x;
+        }
+
+        if (logo.offsetTop + logoHeight >= screenHeight || logo.offsetTop <= 0) {
+            y = -y;
+        }
+
+        if (logo.offsetLeft <= 0 && logo.offsetTop <= 0) {
+            hits++;
+        }
+
+        if (logo.offsetLeft + logoWidth >= screenWidth && logo.offsetTop <= 0) {
+            hits++;
+        }
+
+        if (logo.offsetLeft <= 0 && logo.offsetTop + logoHeight >= screenHeight) {
+            hits++;
+        }
+
+        if (logo.offsetLeft + logoWidth >= screenWidth && logo.offsetTop + logoHeight >= screenHeight) {
+            hits++;
+        }
+
+        counter.innerHTML = hits;
+
+
+        requestAnimationFrame(update);
+    }
+
+    update();
+
+</script>
+
+</html>
